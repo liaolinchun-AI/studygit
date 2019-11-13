@@ -1,0 +1,112 @@
+一、安装
+地址：https://docs.docker.com/install/linux/docker-ce/ubuntu/
+卸载：$ sudo apt-get remove docker docker-engine docker.io containerd runc
+更新apt：/Users/xuyingran/PycharmProjects/TextMiningAndNLP/课件/基础/Docker/Docker.txt
+	$ sudo apt-get update	# 公司服务器一般别搞
+	
+	$ sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+	
+	$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+	
+	$ sudo apt-key fingerprint 0EBFCD88
+	
+	$ sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+   
+   # 安装docker ce
+   $ sudo apt-get install docker-ce docker-ce-cli containerd.io
+   
+   # 查看版本
+	docker version
+	
+	# 卸载当前版本
+	sudo yum remove docker-ce
+	sudo rm -rf /var/lib/docker
+	
+
+	systemctl start docker		# 启动docker
+	systemctl stop docker		# 停止docker
+	systemctl restart docker	# 重启docker
+	systemctl status docker		# 装态docker
+	systemctl enable docker		# 开机启动docker
+	
+	docker info	# 查看docker信息
+	docker --help  # docker命令
+	
+	
+	docker images  # 列出所有的镜像
+	docker search centos	# 查询镜像
+	
+	docker pull hello-world		# 默认从docker hub下载镜像
+	
+	
+	docker rmi 镜像id/镜像名:标签名
+	docker rmi 'docker images -q'	# 删除所有的docker镜像
+	docker rmi 'docker images -qa'	# 删除所有的docker镜像
+	
+	docker ps  # 查看启动的容器
+	docker ps -a # 查看所有容器
+	docker ps -f status=exited	# 查看停止的容器
+	
+	# 通过镜像开启容器
+					容器名			镜像名	  进入容器
+	docker run -it --name=mycentos centos:7 /bin/bash	# 交互式容器的创建
+
+
+docker run -it --name=ubuntu_1704a 657d80a6401d /bin/bash
+		
+	
+	docker run -id --name=mycentos1 centos:7 
+	docker exec -it mycentos1 /bin/bash
+	
+	exit	# 关闭容器并退出
+	ctr+p+q 	# 退出容器，不关闭
+	
+	docker start 容器名/容器id  # 启动容器
+	docker stop 容器名/容器id  # 停止容器
+	docker restart 容器名/容器id  # 重启容器
+	
+	docker attach 容器名/容器id    # 进入容器
+	
+	docker rm  容器名/容器id		# 删除容器，前提是该容器处于关闭状态
+	docker rm -f $(docker ps -q)	# 强制（-f）删除所有
+	
+	# 目录挂载 -v
+	docker run -it --name=1609a3 -v home/09a_docker/09a_docker_data/gaofei_data/1612a:/tmp tfgpu1.13.1-ubuntu16.04-cuda10.0-v1.0:latest /bin/bash		# 如果报错，执行下面命令
+	docker run -it  --name="容器名称"  镜像 /bin/bash
+	
+	docker cp 宿主机文件路径  容器名：容器路径
+	docker cp 容器名：容器路径  宿主机文件路径
+	注意：容器之间不可以拷贝
+	
+	
+	# 查看容器详细信息
+	docker inspect 容器名/容器id
+	查看挂载：docker inspect 容器名/容器id | grep Mounts -A 100
+	
+	# 备份和迁移
+	docker commit 容器名  保存的镜像名
+	# 将镜像转换为压缩文件导出
+	docker save -o 输出的压缩文件名（.tar） 镜像名
+	# 通过压缩文件恢复镜像
+	docker rmi 镜像名
+	docker load -i 压缩文件名
+	docker images 查看镜像名
+	
+	# 继承容器
+	docker run -it --name 容器2名称 --volumes-from 容器1名称 镜像名
+						  新建容器     继承自       被继承容  镜像的名称
+						  
+						  
+						  
+	
+
+	
+	
